@@ -1,0 +1,64 @@
+// Voice Controlled Robot using Arduino and Bluetooth
+
+char command;
+int motor1A = 5;   // Right motor forward
+int motor1B = 6;   // Right motor backward
+int motor2A = 9;   // Left motor forward
+int motor2B = 10;  // Left motor backward
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(motor1A, OUTPUT);
+  pinMode(motor1B, OUTPUT);
+  pinMode(motor2A, OUTPUT);
+  pinMode(motor2B, OUTPUT);
+  stopMotors();
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    command = Serial.read();
+    switch (command) {
+      case 'F': forward(); break;   // Forward
+      case 'B': backward(); break;  // Backward
+      case 'L': left(); break;      // Left
+      case 'R': right(); break;     // Right
+      case 'S': stopMotors(); break; // Stop
+    }
+  }
+}
+
+void forward() {
+  digitalWrite(motor1A, HIGH);
+  digitalWrite(motor1B, LOW);
+  digitalWrite(motor2A, HIGH);
+  digitalWrite(motor2B, LOW);
+}
+
+void backward() {
+  digitalWrite(motor1A, LOW);
+  digitalWrite(motor1B, HIGH);
+  digitalWrite(motor2A, LOW);
+  digitalWrite(motor2B, HIGH);
+}
+
+void left() {
+  digitalWrite(motor1A, LOW);
+  digitalWrite(motor1B, HIGH);
+  digitalWrite(motor2A, HIGH);
+  digitalWrite(motor2B, LOW);
+}
+
+void right() {
+  digitalWrite(motor1A, HIGH);
+  digitalWrite(motor1B, LOW);
+  digitalWrite(motor2A, LOW);
+  digitalWrite(motor2B, HIGH);
+}
+
+void stopMotors() {
+  digitalWrite(motor1A, LOW);
+  digitalWrite(motor1B, LOW);
+  digitalWrite(motor2A, LOW);
+  digitalWrite(motor2B, LOW);
+}
